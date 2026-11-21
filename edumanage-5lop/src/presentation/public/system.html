@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sao lưu &amp; Nhật ký hệ thống – EduManage University</title>
+  <link rel="icon" href="img/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="auth-pending" data-page="system" data-require-role="admin">
+  <div class="app" id="app-view">
+    <!-- ===== Menu bên trái ===== -->
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand-logo">🎓</span> EduManage</a>
+      <nav class="nav">
+        <div class="nav-section" data-roles="admin,lecturer">Tổng quan</div>
+        <a href="dashboard.html" data-roles="admin,lecturer"><span class="ico">📊</span> <span data-nav-label>Dashboard</span></a>
+        <div class="nav-section" data-roles="admin,lecturer">Đào tạo</div>
+        <a href="students.html" data-roles="admin,lecturer"><span class="ico">🎓</span> <span data-nav-label>Sinh viên</span></a>
+        <a href="lecturers.html" data-roles="admin,lecturer"><span class="ico">👨‍🏫</span> <span data-nav-label>Giảng viên</span></a>
+        <a href="classes.html" data-roles="admin,lecturer"><span class="ico">🏫</span> <span data-nav-label>Lớp sinh hoạt</span></a>
+        <a href="courses.html" data-roles="admin,lecturer"><span class="ico">📚</span> <span data-nav-label>Học phần</span></a>
+        <a href="sections.html" data-roles="admin,lecturer"><span class="ico">🗓️</span> <span data-nav-label>Lớp học phần</span></a>
+        <div class="nav-section">Học vụ</div>
+        <a href="attendance.html" data-roles="admin,lecturer"><span class="ico">✅</span> <span data-nav-label>Điểm danh</span></a>
+        <a href="grades.html" data-roles="admin,lecturer"><span class="ico">📝</span> <span data-nav-label>Nhập điểm</span></a>
+        <a href="transcript.html"><span class="ico">📄</span> <span data-nav-label>Bảng điểm sinh viên</span></a>
+        <div class="nav-section" data-roles="admin">Hệ thống</div>
+        <a href="users.html" data-roles="admin"><span class="ico">👤</span> <span data-nav-label>Tài khoản</span></a>
+        <a href="system.html" class="active" data-roles="admin"><span class="ico">🛡️</span> <span data-nav-label>Sao lưu &amp; Nhật ký</span></a>
+      </nav>
+      <div class="sidebar-foot">EduManage University v3.0</div>
+    </aside>
+    <div class="backdrop-mobile" id="nav-backdrop"></div>
+
+    <div class="main">
+      <!-- ===== Thanh trên cùng ===== -->
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menu-btn" aria-label="Mở menu">☰</button>
+        <h2>Sao lưu &amp; Nhật ký hệ thống</h2>
+        <div class="user-menu">
+          <button class="user-chip" id="user-chip" aria-haspopup="true">
+            <span class="avatar" id="user-avatar">?</span>
+            <span class="name" id="user-name">—</span> ▾
+          </button>
+          <div class="dropdown hidden" id="user-dropdown">
+            <div class="meta"><div id="user-full"></div><div id="user-role"></div></div>
+            <a class="dropdown-item" href="account.html">🔑 Tài khoản của tôi</a>
+            <button class="dropdown-item" id="btn-logout">🚪 Đăng xuất</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== Nội dung trang ===== -->
+      <main class="content" id="page">
+        <div class="grid grid-3-1">
+          <div class="card">
+            <div class="card-title">Nhật ký thao tác <input class="input" id="filter-q" placeholder="🔍 Lọc nhật ký..." /></div>
+            <div class="table-wrap scroll-560">
+              <table>
+                <thead><tr><th>Thời gian</th><th>Người dùng</th><th>Hành động</th><th>Chi tiết</th></tr></thead>
+                <tbody id="log-body"><tr><td colspan="4" class="empty">Đang tải dữ liệu...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Sao lưu dữ liệu <button class="btn btn-primary btn-sm" id="btn-backup">＋ Sao lưu ngay</button></div>
+            <p class="muted">Hệ thống tự sao lưu khi khởi động và định kỳ. Giữ tối đa 10 bản gần nhất.</p>
+            <ul class="list" id="backup-list"></ul>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/pages/system.js"></script>
+</body>
+</html>

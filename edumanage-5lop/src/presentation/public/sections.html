@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lớp học phần – EduManage University</title>
+  <link rel="icon" href="img/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="auth-pending" data-page="sections" data-require-role="admin,lecturer">
+  <div class="app" id="app-view">
+    <!-- ===== Menu bên trái ===== -->
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand-logo">🎓</span> EduManage</a>
+      <nav class="nav">
+        <div class="nav-section" data-roles="admin,lecturer">Tổng quan</div>
+        <a href="dashboard.html" data-roles="admin,lecturer"><span class="ico">📊</span> <span data-nav-label>Dashboard</span></a>
+        <div class="nav-section" data-roles="admin,lecturer">Đào tạo</div>
+        <a href="students.html" data-roles="admin,lecturer"><span class="ico">🎓</span> <span data-nav-label>Sinh viên</span></a>
+        <a href="lecturers.html" data-roles="admin,lecturer"><span class="ico">👨‍🏫</span> <span data-nav-label>Giảng viên</span></a>
+        <a href="classes.html" data-roles="admin,lecturer"><span class="ico">🏫</span> <span data-nav-label>Lớp sinh hoạt</span></a>
+        <a href="courses.html" data-roles="admin,lecturer"><span class="ico">📚</span> <span data-nav-label>Học phần</span></a>
+        <a href="sections.html" class="active" data-roles="admin,lecturer"><span class="ico">🗓️</span> <span data-nav-label>Lớp học phần</span></a>
+        <div class="nav-section">Học vụ</div>
+        <a href="attendance.html" data-roles="admin,lecturer"><span class="ico">✅</span> <span data-nav-label>Điểm danh</span></a>
+        <a href="grades.html" data-roles="admin,lecturer"><span class="ico">📝</span> <span data-nav-label>Nhập điểm</span></a>
+        <a href="transcript.html"><span class="ico">📄</span> <span data-nav-label>Bảng điểm sinh viên</span></a>
+        <div class="nav-section" data-roles="admin">Hệ thống</div>
+        <a href="users.html" data-roles="admin"><span class="ico">👤</span> <span data-nav-label>Tài khoản</span></a>
+        <a href="system.html" data-roles="admin"><span class="ico">🛡️</span> <span data-nav-label>Sao lưu &amp; Nhật ký</span></a>
+      </nav>
+      <div class="sidebar-foot">EduManage University v3.0</div>
+    </aside>
+    <div class="backdrop-mobile" id="nav-backdrop"></div>
+
+    <div class="main">
+      <!-- ===== Thanh trên cùng ===== -->
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menu-btn" aria-label="Mở menu">☰</button>
+        <h2>Lớp học phần</h2>
+        <div class="user-menu">
+          <button class="user-chip" id="user-chip" aria-haspopup="true">
+            <span class="avatar" id="user-avatar">?</span>
+            <span class="name" id="user-name">—</span> ▾
+          </button>
+          <div class="dropdown hidden" id="user-dropdown">
+            <div class="meta"><div id="user-full"></div><div id="user-role"></div></div>
+            <a class="dropdown-item" href="account.html">🔑 Tài khoản của tôi</a>
+            <button class="dropdown-item" id="btn-logout">🚪 Đăng xuất</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== Nội dung trang ===== -->
+      <main class="content" id="page">
+        <div class="card">
+          <div class="toolbar">
+            <select class="select" id="filter-semester"><option value="">Tất cả học kỳ</option></select>
+            <input class="input search" id="filter-q" placeholder="🔍 Tìm theo mã lớp, học phần, giảng viên..." />
+            <label class="checkbox" data-roles="lecturer"><input type="checkbox" id="filter-mine" checked /> Chỉ lớp tôi dạy</label>
+            <span class="spacer"></span>
+            <span class="muted" id="count"></span>
+            <button class="btn btn-primary" id="btn-add" data-roles="admin">＋ Mở lớp học phần</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Mã LHP</th><th>Học phần</th><th class="text-center">TC</th><th>Giảng viên</th><th>Học kỳ</th><th>Lịch học</th><th>Phòng</th><th class="text-center">Sĩ số</th><th></th></tr></thead>
+              <tbody id="table-body"><tr><td colspan="9" class="empty">Đang tải dữ liệu...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== Hộp thoại: Mở lớp học phần ===== -->
+        <div class="modal-backdrop hidden" id="section-modal">
+          <form class="modal " novalidate>
+            <div class="modal-head"><h3 data-title>Mở lớp học phần</h3><button type="button" class="icon-btn" data-close aria-label="Đóng">✕</button></div>
+            <div class="modal-body">
+              <div class="form-error hidden"></div>
+              <div class="form-grid">
+            <div class="field full">
+              <label for="courseId">Học phần <span class="req">*</span></label>
+              <select class="select" id="courseId" name="courseId"><option value="">-- Chọn học phần --</option></select>
+              <div class="error" data-error-for="courseId"></div>
+            </div>
+            <div class="field full">
+              <label for="lecturerId">Giảng viên phụ trách <span class="req">*</span></label>
+              <select class="select" id="lecturerId" name="lecturerId"><option value="">-- Chọn giảng viên --</option></select>
+              <div class="error" data-error-for="lecturerId"></div>
+            </div>
+            <div class="field">
+              <label for="semester">Học kỳ <span class="req">*</span></label>
+              <select class="select" id="semester" name="semester"></select>
+              <div class="error" data-error-for="semester"></div>
+            </div>
+            <div class="field">
+              <label for="capacity">Sĩ số tối đa <span class="req">*</span></label>
+              <input class="input" id="capacity" name="capacity" type="number" min="1" max="300" />
+              <div class="error" data-error-for="capacity"></div>
+            </div>
+            <div class="field">
+              <label for="schedule">Lịch học</label>
+              <input class="input" id="schedule" name="schedule" type="text" placeholder="VD: Thứ 2, tiết 1–3" />
+              <div class="error" data-error-for="schedule"></div>
+            </div>
+            <div class="field">
+              <label for="room">Phòng học</label>
+              <input class="input" id="room" name="room" type="text" placeholder="VD: A101" />
+              <div class="error" data-error-for="room"></div>
+            </div>
+              </div>
+            </div>
+            <div class="modal-foot">
+              <button type="button" class="btn" data-close>Huỷ</button>
+              <button type="submit" class="btn btn-primary" data-submit>Mở lớp</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ===== Hộp thoại: Danh sách sinh viên của lớp học phần ===== -->
+        <div class="modal-backdrop hidden" id="roster-modal">
+          <div class="modal lg">
+            <div class="modal-head"><h3>Danh sách sinh viên – <span data-field="id"></span></h3><button type="button" class="icon-btn" data-close aria-label="Đóng">✕</button></div>
+            <div class="modal-body">
+              <p class="muted mt-0"><b data-field="courseName"></b> · <span data-field="lecturerName"></span> · <span data-field="semester"></span> · Sĩ số: <b id="roster-count"></b></p>
+              <div class="enroll-box" data-roles="admin">
+                <div class="toolbar mb-0">
+                  <select class="select" id="enroll-class"><option value="">-- Thêm cả lớp sinh hoạt --</option></select>
+                  <button type="button" class="btn" id="btn-enroll-class">Thêm cả lớp</button>
+                  <span class="spacer"></span>
+                  <input class="input" id="enroll-id" placeholder="Nhập MSSV" />
+                  <button type="button" class="btn btn-primary" id="btn-enroll-one">＋ Thêm</button>
+                </div>
+              </div>
+              <div class="table-wrap scroll-400">
+                <table>
+                  <thead><tr><th>MSSV</th><th>Họ và tên</th><th>Lớp</th><th>Tình trạng</th><th></th></tr></thead>
+                  <tbody id="roster-body"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="modal-foot"><button type="button" class="btn" data-close>Đóng</button></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/pages/sections.js"></script>
+</body>
+</html>

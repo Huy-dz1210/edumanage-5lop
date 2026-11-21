@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng nhập – EduManage University</title>
+  <link rel="icon" href="img/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <section class="login-view">
+    <form id="login-form" class="login-card" novalidate>
+      <div class="brand"><span class="brand-logo">🎓</span> EduManage University</div>
+      <h1>Hệ thống quản lý sinh viên</h1>
+      <p class="sub">Đăng nhập bằng tài khoản được nhà trường cấp</p>
+
+      <div id="login-error" class="form-error hidden"></div>
+
+      <div class="field mb">
+        <label for="username">Tên đăng nhập</label>
+        <input id="username" name="username" class="input" autocomplete="username" required autofocus />
+      </div>
+      <div class="field mb-lg">
+        <label for="password">Mật khẩu</label>
+        <input id="password" name="password" type="password" class="input" autocomplete="current-password" required />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="login-submit">Đăng nhập</button>
+
+      <div class="demo-box">
+        Tài khoản dùng thử (mật khẩu đều là <b>123456</b>):<br />
+        • Phòng đào tạo: <b>admin</b><br />
+        • Giảng viên: <b>gv01</b><br />
+        • Sinh viên: <b>sv01</b>
+      </div>
+    </form>
+  </section>
+
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/pages/login.js"></script>
+</body>
+</html>

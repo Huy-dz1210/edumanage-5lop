@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Học phần – EduManage University</title>
+  <link rel="icon" href="img/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="auth-pending" data-page="courses" data-require-role="admin,lecturer">
+  <div class="app" id="app-view">
+    <!-- ===== Menu bên trái ===== -->
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand-logo">🎓</span> EduManage</a>
+      <nav class="nav">
+        <div class="nav-section" data-roles="admin,lecturer">Tổng quan</div>
+        <a href="dashboard.html" data-roles="admin,lecturer"><span class="ico">📊</span> <span data-nav-label>Dashboard</span></a>
+        <div class="nav-section" data-roles="admin,lecturer">Đào tạo</div>
+        <a href="students.html" data-roles="admin,lecturer"><span class="ico">🎓</span> <span data-nav-label>Sinh viên</span></a>
+        <a href="lecturers.html" data-roles="admin,lecturer"><span class="ico">👨‍🏫</span> <span data-nav-label>Giảng viên</span></a>
+        <a href="classes.html" data-roles="admin,lecturer"><span class="ico">🏫</span> <span data-nav-label>Lớp sinh hoạt</span></a>
+        <a href="courses.html" class="active" data-roles="admin,lecturer"><span class="ico">📚</span> <span data-nav-label>Học phần</span></a>
+        <a href="sections.html" data-roles="admin,lecturer"><span class="ico">🗓️</span> <span data-nav-label>Lớp học phần</span></a>
+        <div class="nav-section">Học vụ</div>
+        <a href="attendance.html" data-roles="admin,lecturer"><span class="ico">✅</span> <span data-nav-label>Điểm danh</span></a>
+        <a href="grades.html" data-roles="admin,lecturer"><span class="ico">📝</span> <span data-nav-label>Nhập điểm</span></a>
+        <a href="transcript.html"><span class="ico">📄</span> <span data-nav-label>Bảng điểm sinh viên</span></a>
+        <div class="nav-section" data-roles="admin">Hệ thống</div>
+        <a href="users.html" data-roles="admin"><span class="ico">👤</span> <span data-nav-label>Tài khoản</span></a>
+        <a href="system.html" data-roles="admin"><span class="ico">🛡️</span> <span data-nav-label>Sao lưu &amp; Nhật ký</span></a>
+      </nav>
+      <div class="sidebar-foot">EduManage University v3.0</div>
+    </aside>
+    <div class="backdrop-mobile" id="nav-backdrop"></div>
+
+    <div class="main">
+      <!-- ===== Thanh trên cùng ===== -->
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menu-btn" aria-label="Mở menu">☰</button>
+        <h2>Học phần</h2>
+        <div class="user-menu">
+          <button class="user-chip" id="user-chip" aria-haspopup="true">
+            <span class="avatar" id="user-avatar">?</span>
+            <span class="name" id="user-name">—</span> ▾
+          </button>
+          <div class="dropdown hidden" id="user-dropdown">
+            <div class="meta"><div id="user-full"></div><div id="user-role"></div></div>
+            <a class="dropdown-item" href="account.html">🔑 Tài khoản của tôi</a>
+            <button class="dropdown-item" id="btn-logout">🚪 Đăng xuất</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== Nội dung trang ===== -->
+      <main class="content" id="page">
+        <div class="card">
+          <div class="toolbar">
+            <input class="input search" id="filter-q" placeholder="🔍 Tìm theo mã hoặc tên học phần..." />
+            <select class="select" id="filter-faculty"><option value="">Tất cả khoa</option></select>
+            <span class="spacer"></span>
+            <span class="muted" id="count"></span>
+            <button class="btn btn-primary" id="btn-add" data-roles="admin">＋ Thêm học phần</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Mã HP</th><th>Tên học phần</th><th class="text-center">Số TC</th><th>Loại</th><th>Khoa quản lý</th><th class="text-center">Số lớp HP</th><th></th></tr></thead>
+              <tbody id="table-body"><tr><td colspan="7" class="empty">Đang tải dữ liệu...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===== Hộp thoại: Thêm học phần mới ===== -->
+        <div class="modal-backdrop hidden" id="course-modal">
+          <form class="modal " novalidate>
+            <div class="modal-head"><h3 data-title>Thêm học phần mới</h3><button type="button" class="icon-btn" data-close aria-label="Đóng">✕</button></div>
+            <div class="modal-body">
+              <div class="form-error hidden"></div>
+              <div class="form-grid">
+            <div class="field">
+              <label for="id">Mã học phần <span class="req">*</span></label>
+              <input class="input" id="id" name="id" type="text" placeholder="VD: IT006" />
+              <div class="error" data-error-for="id"></div>
+            </div>
+            <div class="field">
+              <label for="credits">Số tín chỉ <span class="req">*</span></label>
+              <input class="input" id="credits" name="credits" type="number" min="1" max="10" />
+              <div class="error" data-error-for="credits"></div>
+            </div>
+            <div class="field full">
+              <label for="name">Tên học phần <span class="req">*</span></label>
+              <input class="input" id="name" name="name" type="text" />
+              <div class="error" data-error-for="name"></div>
+            </div>
+            <div class="field">
+              <label for="facultyId">Khoa quản lý <span class="req">*</span></label>
+              <select class="select" id="facultyId" name="facultyId"><option value="">-- Chọn khoa --</option></select>
+              <div class="error" data-error-for="facultyId"></div>
+            </div>
+            <div class="field">
+              <label for="type">Loại học phần <span class="req">*</span></label>
+              <select class="select" id="type" name="type"><option value="Bắt buộc">Bắt buộc</option><option value="Tự chọn">Tự chọn</option></select>
+              <div class="error" data-error-for="type"></div>
+            </div>
+              </div>
+            </div>
+            <div class="modal-foot">
+              <button type="button" class="btn" data-close>Huỷ</button>
+              <button type="submit" class="btn btn-primary" data-submit>Thêm mới</button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/pages/courses.js"></script>
+</body>
+</html>

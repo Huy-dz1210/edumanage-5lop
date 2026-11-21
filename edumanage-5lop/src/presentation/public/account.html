@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tài khoản của tôi – EduManage University</title>
+  <link rel="icon" href="img/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="auth-pending" data-page="account">
+  <div class="app" id="app-view">
+    <!-- ===== Menu bên trái ===== -->
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand-logo">🎓</span> EduManage</a>
+      <nav class="nav">
+        <div class="nav-section" data-roles="admin,lecturer">Tổng quan</div>
+        <a href="dashboard.html" data-roles="admin,lecturer"><span class="ico">📊</span> <span data-nav-label>Dashboard</span></a>
+        <div class="nav-section" data-roles="admin,lecturer">Đào tạo</div>
+        <a href="students.html" data-roles="admin,lecturer"><span class="ico">🎓</span> <span data-nav-label>Sinh viên</span></a>
+        <a href="lecturers.html" data-roles="admin,lecturer"><span class="ico">👨‍🏫</span> <span data-nav-label>Giảng viên</span></a>
+        <a href="classes.html" data-roles="admin,lecturer"><span class="ico">🏫</span> <span data-nav-label>Lớp sinh hoạt</span></a>
+        <a href="courses.html" data-roles="admin,lecturer"><span class="ico">📚</span> <span data-nav-label>Học phần</span></a>
+        <a href="sections.html" data-roles="admin,lecturer"><span class="ico">🗓️</span> <span data-nav-label>Lớp học phần</span></a>
+        <div class="nav-section">Học vụ</div>
+        <a href="attendance.html" data-roles="admin,lecturer"><span class="ico">✅</span> <span data-nav-label>Điểm danh</span></a>
+        <a href="grades.html" data-roles="admin,lecturer"><span class="ico">📝</span> <span data-nav-label>Nhập điểm</span></a>
+        <a href="transcript.html"><span class="ico">📄</span> <span data-nav-label>Bảng điểm sinh viên</span></a>
+        <div class="nav-section" data-roles="admin">Hệ thống</div>
+        <a href="users.html" data-roles="admin"><span class="ico">👤</span> <span data-nav-label>Tài khoản</span></a>
+        <a href="system.html" data-roles="admin"><span class="ico">🛡️</span> <span data-nav-label>Sao lưu &amp; Nhật ký</span></a>
+      </nav>
+      <div class="sidebar-foot">EduManage University v3.0</div>
+    </aside>
+    <div class="backdrop-mobile" id="nav-backdrop"></div>
+
+    <div class="main">
+      <!-- ===== Thanh trên cùng ===== -->
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menu-btn" aria-label="Mở menu">☰</button>
+        <h2>Tài khoản của tôi</h2>
+        <div class="user-menu">
+          <button class="user-chip" id="user-chip" aria-haspopup="true">
+            <span class="avatar" id="user-avatar">?</span>
+            <span class="name" id="user-name">—</span> ▾
+          </button>
+          <div class="dropdown hidden" id="user-dropdown">
+            <div class="meta"><div id="user-full"></div><div id="user-role"></div></div>
+            <a class="dropdown-item" href="account.html">🔑 Tài khoản của tôi</a>
+            <button class="dropdown-item" id="btn-logout">🚪 Đăng xuất</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== Nội dung trang ===== -->
+      <main class="content" id="page">
+        <div class="grid grid-2">
+          <div class="card">
+            <div class="card-title">Thông tin tài khoản</div>
+            <ul class="list">
+              <li><span class="muted">Họ tên</span><b id="info-fullName"></b></li>
+              <li><span class="muted">Tên đăng nhập</span><b id="info-username"></b></li>
+              <li><span class="muted">Vai trò</span><b id="info-role"></b></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">Đổi mật khẩu</div>
+            <form id="password-form" novalidate>
+              <div class="form-error hidden"></div>
+              <div class="grid">
+            <div class="field">
+              <label for="currentPassword">Mật khẩu hiện tại <span class="req">*</span></label>
+              <input class="input" id="currentPassword" name="currentPassword" type="password" autocomplete="current-password" />
+              <div class="error" data-error-for="currentPassword"></div>
+            </div>
+            <div class="field">
+              <label for="newPassword">Mật khẩu mới (tối thiểu 6 ký tự) <span class="req">*</span></label>
+              <input class="input" id="newPassword" name="newPassword" type="password" autocomplete="new-password" />
+              <div class="error" data-error-for="newPassword"></div>
+            </div>
+            <div class="field">
+              <label for="confirmPassword">Nhập lại mật khẩu mới <span class="req">*</span></label>
+              <input class="input" id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" />
+              <div class="error" data-error-for="confirmPassword"></div>
+            </div>
+              </div>
+              <div class="mt"><button type="submit" class="btn btn-primary">Đổi mật khẩu</button></div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/pages/account.js"></script>
+</body>
+</html>

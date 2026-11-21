@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bảng điểm sinh viên – EduManage University</title>
+  <link rel="icon" href="img/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="auth-pending" data-page="transcript">
+  <div class="app" id="app-view">
+    <!-- ===== Menu bên trái ===== -->
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand-logo">🎓</span> EduManage</a>
+      <nav class="nav">
+        <div class="nav-section" data-roles="admin,lecturer">Tổng quan</div>
+        <a href="dashboard.html" data-roles="admin,lecturer"><span class="ico">📊</span> <span data-nav-label>Dashboard</span></a>
+        <div class="nav-section" data-roles="admin,lecturer">Đào tạo</div>
+        <a href="students.html" data-roles="admin,lecturer"><span class="ico">🎓</span> <span data-nav-label>Sinh viên</span></a>
+        <a href="lecturers.html" data-roles="admin,lecturer"><span class="ico">👨‍🏫</span> <span data-nav-label>Giảng viên</span></a>
+        <a href="classes.html" data-roles="admin,lecturer"><span class="ico">🏫</span> <span data-nav-label>Lớp sinh hoạt</span></a>
+        <a href="courses.html" data-roles="admin,lecturer"><span class="ico">📚</span> <span data-nav-label>Học phần</span></a>
+        <a href="sections.html" data-roles="admin,lecturer"><span class="ico">🗓️</span> <span data-nav-label>Lớp học phần</span></a>
+        <div class="nav-section">Học vụ</div>
+        <a href="attendance.html" data-roles="admin,lecturer"><span class="ico">✅</span> <span data-nav-label>Điểm danh</span></a>
+        <a href="grades.html" data-roles="admin,lecturer"><span class="ico">📝</span> <span data-nav-label>Nhập điểm</span></a>
+        <a href="transcript.html" class="active"><span class="ico">📄</span> <span data-nav-label>Bảng điểm sinh viên</span></a>
+        <div class="nav-section" data-roles="admin">Hệ thống</div>
+        <a href="users.html" data-roles="admin"><span class="ico">👤</span> <span data-nav-label>Tài khoản</span></a>
+        <a href="system.html" data-roles="admin"><span class="ico">🛡️</span> <span data-nav-label>Sao lưu &amp; Nhật ký</span></a>
+      </nav>
+      <div class="sidebar-foot">EduManage University v3.0</div>
+    </aside>
+    <div class="backdrop-mobile" id="nav-backdrop"></div>
+
+    <div class="main">
+      <!-- ===== Thanh trên cùng ===== -->
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menu-btn" aria-label="Mở menu">☰</button>
+        <h2>Bảng điểm sinh viên</h2>
+        <div class="user-menu">
+          <button class="user-chip" id="user-chip" aria-haspopup="true">
+            <span class="avatar" id="user-avatar">?</span>
+            <span class="name" id="user-name">—</span> ▾
+          </button>
+          <div class="dropdown hidden" id="user-dropdown">
+            <div class="meta"><div id="user-full"></div><div id="user-role"></div></div>
+            <a class="dropdown-item" href="account.html">🔑 Tài khoản của tôi</a>
+            <button class="dropdown-item" id="btn-logout">🚪 Đăng xuất</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== Nội dung trang ===== -->
+      <main class="content" id="page">
+        <div class="card no-print" data-roles="admin,lecturer">
+          <div class="toolbar mb-0">
+            <input class="input search" id="student-search" list="student-options" placeholder="🔍 Nhập MSSV hoặc họ tên sinh viên..." />
+            <datalist id="student-options"></datalist>
+            <button class="btn btn-primary" id="btn-view">Xem bảng điểm</button>
+            <span class="spacer"></span>
+            <button class="btn" id="btn-print">🖨️ In bảng điểm</button>
+          </div>
+        </div>
+
+        <div id="transcript" class="hidden">
+          <div class="grid grid-3-1 mt">
+            <div class="card">
+              <div class="card-title">Thông tin sinh viên <button class="btn btn-sm no-print" data-roles="student" id="btn-print-2">🖨️ In</button></div>
+              <div class="info-grid">
+                <div><span class="muted">MSSV</span><b data-info="id"></b></div>
+                <div><span class="muted">Họ và tên</span><b data-info="fullName"></b></div>
+                <div><span class="muted">Ngày sinh</span><b data-info="dob"></b></div>
+                <div><span class="muted">Giới tính</span><b data-info="gender"></b></div>
+                <div><span class="muted">Lớp</span><b data-info="classId"></b></div>
+                <div><span class="muted">Khoá</span><b data-info="cohort"></b></div>
+                <div><span class="muted">Khoa</span><b data-info="facultyName"></b></div>
+                <div><span class="muted">Ngành</span><b data-info="major"></b></div>
+                <div><span class="muted">Cố vấn học tập</span><b data-info="advisorName"></b></div>
+                <div><span class="muted">Tình trạng</span><b data-info="status"></b></div>
+              </div>
+            </div>
+            <div class="card summary-card">
+              <div class="card-title">Tổng kết</div>
+              <div class="big-number" id="sum-gpa">—</div>
+              <div class="muted text-center">GPA tích lũy (thang 4)</div>
+              <ul class="list mt">
+                <li><span class="muted">Xếp loại học lực</span><b id="sum-class"></b></li>
+                <li><span class="muted">Tín chỉ tích lũy</span><b id="sum-earned"></b></li>
+                <li><span class="muted">Tín chỉ đã học</span><b id="sum-attempted"></b></li>
+              </ul>
+            </div>
+          </div>
+          <div id="semesters"></div>
+        </div>
+        <div class="card mt empty" id="transcript-empty" data-roles="admin,lecturer">Chọn một sinh viên để xem bảng điểm.</div>
+      </main>
+    </div>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/pages/transcript.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – EduManage University</title>
+  <link rel="icon" href="img/favicon.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="auth-pending" data-page="dashboard" data-require-role="admin,lecturer">
+  <div class="app" id="app-view">
+    <!-- ===== Menu bên trái ===== -->
+    <aside class="sidebar">
+      <a class="brand" href="index.html"><span class="brand-logo">🎓</span> EduManage</a>
+      <nav class="nav">
+        <div class="nav-section" data-roles="admin,lecturer">Tổng quan</div>
+        <a href="dashboard.html" class="active" data-roles="admin,lecturer"><span class="ico">📊</span> <span data-nav-label>Dashboard</span></a>
+        <div class="nav-section" data-roles="admin,lecturer">Đào tạo</div>
+        <a href="students.html" data-roles="admin,lecturer"><span class="ico">🎓</span> <span data-nav-label>Sinh viên</span></a>
+        <a href="lecturers.html" data-roles="admin,lecturer"><span class="ico">👨‍🏫</span> <span data-nav-label>Giảng viên</span></a>
+        <a href="classes.html" data-roles="admin,lecturer"><span class="ico">🏫</span> <span data-nav-label>Lớp sinh hoạt</span></a>
+        <a href="courses.html" data-roles="admin,lecturer"><span class="ico">📚</span> <span data-nav-label>Học phần</span></a>
+        <a href="sections.html" data-roles="admin,lecturer"><span class="ico">🗓️</span> <span data-nav-label>Lớp học phần</span></a>
+        <div class="nav-section">Học vụ</div>
+        <a href="attendance.html" data-roles="admin,lecturer"><span class="ico">✅</span> <span data-nav-label>Điểm danh</span></a>
+        <a href="grades.html" data-roles="admin,lecturer"><span class="ico">📝</span> <span data-nav-label>Nhập điểm</span></a>
+        <a href="transcript.html"><span class="ico">📄</span> <span data-nav-label>Bảng điểm sinh viên</span></a>
+        <div class="nav-section" data-roles="admin">Hệ thống</div>
+        <a href="users.html" data-roles="admin"><span class="ico">👤</span> <span data-nav-label>Tài khoản</span></a>
+        <a href="system.html" data-roles="admin"><span class="ico">🛡️</span> <span data-nav-label>Sao lưu &amp; Nhật ký</span></a>
+      </nav>
+      <div class="sidebar-foot">EduManage University v3.0</div>
+    </aside>
+    <div class="backdrop-mobile" id="nav-backdrop"></div>
+
+    <div class="main">
+      <!-- ===== Thanh trên cùng ===== -->
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="menu-btn" aria-label="Mở menu">☰</button>
+        <h2>Dashboard</h2>
+        <div class="user-menu">
+          <button class="user-chip" id="user-chip" aria-haspopup="true">
+            <span class="avatar" id="user-avatar">?</span>
+            <span class="name" id="user-name">—</span> ▾
+          </button>
+          <div class="dropdown hidden" id="user-dropdown">
+            <div class="meta"><div id="user-full"></div><div id="user-role"></div></div>
+            <a class="dropdown-item" href="account.html">🔑 Tài khoản của tôi</a>
+            <button class="dropdown-item" id="btn-logout">🚪 Đăng xuất</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== Nội dung trang ===== -->
+      <main class="content" id="page">
+        <p class="page-sub">Học kỳ hiện tại: <b id="current-semester">—</b></p>
+        <div class="grid grid-4">
+          <div class="card stat"><div class="ico bg-blue">🎓</div><div><div class="value" id="stat-students">—</div><div class="label" id="stat-students-label">Sinh viên đang học</div></div></div>
+          <div class="card stat"><div class="ico bg-green">👨‍🏫</div><div><div class="value" id="stat-lecturers">—</div><div class="label">Giảng viên</div></div></div>
+          <div class="card stat"><div class="ico bg-amber">📚</div><div><div class="value" id="stat-courses">—</div><div class="label">Học phần</div></div></div>
+          <div class="card stat"><div class="ico bg-red">🗓️</div><div><div class="value" id="stat-sections">—</div><div class="label" id="stat-sections-label">Lớp học phần đang mở</div></div></div>
+        </div>
+
+        <div class="card mt" data-roles="lecturer">
+          <div class="card-title">Lớp học phần tôi phụ trách <a href="sections.html" class="btn btn-sm">Xem tất cả</a></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Mã LHP</th><th>Học phần</th><th>Lịch học</th><th>Phòng</th><th>Sĩ số</th><th></th></tr></thead>
+              <tbody id="my-sections"><tr><td colspan="6" class="empty">Đang tải dữ liệu...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="grid grid-3-1 mt">
+          <div class="card">
+            <div class="card-title"><span>Điểm danh 7 ngày gần nhất <small class="muted" id="att-today"></small></span> <a href="attendance.html" class="btn btn-sm">Điểm danh</a></div>
+            <div class="bars" id="chart-attendance"></div>
+            <div class="legend"><span><i class="dot-present"></i>Có mặt</span><span><i class="dot-late"></i>Muộn</span><span><i class="dot-absent"></i>Vắng</span></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Xếp loại học lực (GPA tích lũy)</div>
+            <div id="classification"></div>
+            <p class="muted mt-sm">GPA trung bình toàn trường: <b id="average-gpa">—</b> / 4.0</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2 mt">
+          <div class="card">
+            <div class="card-title">Sinh viên có GPA cao nhất <a href="students.html" class="btn btn-sm">Danh sách SV</a></div>
+            <ul class="list" id="top-students"></ul>
+          </div>
+          <div class="card">
+            <div class="card-title">Thống kê theo khoa</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Khoa</th><th class="text-center">Sinh viên</th><th class="text-center">Giảng viên</th></tr></thead>
+              <tbody id="by-faculty"><tr><td colspan="3" class="empty">Đang tải dữ liệu...</td></tr></tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+
+        <div class="card mt" data-roles="admin">
+          <div class="card-title">Hoạt động gần đây <a href="system.html" class="btn btn-sm">Xem tất cả</a></div>
+          <ul class="list" id="recent-activity"></ul>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/pages/dashboard.js"></script>
+</body>
+</html>

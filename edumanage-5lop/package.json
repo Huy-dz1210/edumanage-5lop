@@ -1,0 +1,21 @@
+{
+  "name": "edumanage-university",
+  "version": "3.0.0",
+  "description": "EduManage University - Hệ thống quản lý sinh viên đại học, kiến trúc 5 lớp (Node.js + Express)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node scripts/seed.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1"
+  }
+}

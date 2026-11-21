@@ -1,0 +1,53 @@
+### Thử API trực tiếp trong VS Code (cài extension "REST Client", bấm "Send Request")
+@base = http://localhost:3000
+
+### Đăng nhập
+POST {{base}}/api/auth/login
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{ "username": "admin", "password": "123456" }
+
+### Thông tin người đang đăng nhập
+GET {{base}}/api/auth/me
+
+### Dashboard
+GET {{base}}/api/dashboard
+
+### Danh sách sinh viên (lọc theo lớp, tìm kiếm không dấu)
+GET {{base}}/api/students?classId=DH22CNTT01&q=nguyen
+
+### Thêm sinh viên (MSSV tự cấp theo khoá)
+POST {{base}}/api/students
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{ "fullName": "Trần Văn Mới", "gender": "Nam", "dob": "2004-09-01", "classId": "DH22CNTT01", "phone": "0912345678" }
+
+### Điểm danh lớp học phần IT003-01
+PUT {{base}}/api/attendance/IT003-01/2026-11-19
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{ "records": { "2200001": "present", "2200002": "late", "2200003": "absent" } }
+
+### Bảng điểm lớp học phần
+GET {{base}}/api/grades?sectionId=IT003-01
+
+### Nhập điểm lớp học phần (CC 10%, GK 30%, CK 60%)
+PUT {{base}}/api/grades/IT003-01
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+
+{ "items": [{ "studentId": "2200001", "attendance": 10, "midterm": 8, "final": 9 }] }
+
+### Bảng điểm cá nhân + GPA
+GET {{base}}/api/students/2200001/transcript
+
+### Tạo bản sao lưu
+POST {{base}}/api/system/backups
+X-Requested-With: XMLHttpRequest
+
+### Đăng xuất
+POST {{base}}/api/auth/logout
+X-Requested-With: XMLHttpRequest
